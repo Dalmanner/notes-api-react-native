@@ -1,43 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { updateNote, deleteNote } from "../../src/api/notesApi";
 
 interface NoteDetailScreenProps {
-  route: { params: { note: { id: string; title: string; text: string } } };
+  route: { params: { id: string, title: string, text: string } };
   navigation: { goBack: () => void };
 }
 
-export default function NoteDetailScreen({ route = { params: { note: { id: '', title: '', text: '' } } }, navigation }: NoteDetailScreenProps) {
-  const { note } = route.params;
-  const [title, setTitle] = useState(note.title);
-  const [text, setText] = useState(note.text);
+export default function NoteDetailScreen({ route, navigation }: NoteDetailScreenProps) {
+  const id = route?.params?.id; // Note ID passed from navigation
+  const initTitle = route?.params?.title; // Note title passed from navigation
+  const initText = route?.params?.text; // Note text passed from navigation
+  const [title, setTitle] = useState(initTitle);
+  const [text, setText] = useState(initText);
+  const [loading, setLoading] = useState(true);
 
+  // Fetch specific note by ID
+  useEffect(() => {
+    const fetchNoteById = async () => {
+      try {
+        const response = await updateNote(id, { title, text });
+        const note = response.data.find((note: { id: string }) => note.id === id);
+        if (note) {
+          setTitle(note.title); // Populate the title
+          setText(note.text);  // Populate the text
+        } else {
+          alert("Note not found.");
+        }
+      } catch (err) {
+        console.error("Error fetching note:", err);
+        alert("Failed to fetch note.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNoteById();
+  }, [id]);
+
+  // Handle note update
   const handleUpdateNote = async () => {
     try {
-      await updateNote(note.id, { title, text });
+      await updateNote(id, { title, text });
       alert("Note updated successfully!");
-      navigation.goBack(); // Navigera tillbaka till anteckningslistan
+      navigation.goBack();
     } catch (err) {
       console.error("Error updating note:", err);
       alert("Failed to update note.");
     }
   };
 
+  // Handle note deletion
   const handleDeleteNote = async () => {
     try {
-      await deleteNote(note.id);
+      await deleteNote(id);
       alert("Note deleted successfully!");
-      navigation.goBack(); // Navigera tillbaka till anteckningslistan
+      navigation.goBack();
     } catch (err) {
       console.error("Error deleting note:", err);
       alert("Failed to delete note.");
     }
   };
 
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Edit Note</Text>
-
       <TextInput
         style={styles.input}
         value={title}
@@ -51,7 +86,6 @@ export default function NoteDetailScreen({ route = { params: { note: { id: '', t
         placeholder="Text"
         multiline
       />
-
       <Button title="Save Changes" onPress={handleUpdateNote} />
       <Button title="Delete Note" onPress={handleDeleteNote} color="red" />
     </View>

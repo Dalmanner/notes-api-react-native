@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity }
 import { useNavigation } from "@react-navigation/native";
 import { createNote, getNotes } from "../../src/api/notesApi";
 import { StackNavigationProp } from '@react-navigation/stack';
-import { NOTE_DETAILS, RootStackParamList } from '../../src/navigation/types';
+import { RootStackParamList } from '../../src/navigation/types';
 
 interface Note {
   id: string;
@@ -17,7 +17,7 @@ export default function ExploreScreen() {
   const [loading, setLoading] = useState(true);
   
   
-  type ExploreScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Explore'>;
+  type ExploreScreenNavigationProp = StackNavigationProp<RootStackParamList, "Explore">;
   
   const navigation = useNavigation<ExploreScreenNavigationProp>();
 
@@ -88,11 +88,12 @@ export default function ExploreScreen() {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.note}
-            onPress={() => navigation.navigate(NOTE_DETAILS, { id: item.id })} // Ensure this matches the route name in your navigation types
+            onPress={() => navigation.navigate("NoteDetailScreen", { id: item.id, title: item.title, text: item.text })} // Pass the note id
           >
             <Text style={styles.title}>{item.title}</Text>
             <Text>{item.text}</Text>
           </TouchableOpacity>
+
         )}
       />
     </View>

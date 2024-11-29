@@ -3,10 +3,11 @@
 
 export type RootStackParamList = {
 
+    goBack: undefined;
     Explore: undefined;
     Home: undefined;
     Notes: undefined;
-    NoteDetails: { id: string };
+    NoteDetailScreen: { id: string, title: string, text: string };
     CreateNote: undefined;
     EditNote: { id: string };
     DeletedNotes: undefined;
@@ -68,5 +69,15 @@ export const RESTORE_NOTE_ERROR = 'RestoreNoteError';
 export const RESTORE_NOTE_LOADING = 'RestoreNoteLoading';
 export const RESTORE_NOTE_CONFIRM = 'RestoreNoteConfirm';
 export const RESTORE_NOTE_DETAILS = 'RestoreNoteDetails';
+
+export type UserData = {
+    username: string;
+    password: string;
+};
+
+export type NoteData = {
+    title: string;
+    text: string;
+};
 
 

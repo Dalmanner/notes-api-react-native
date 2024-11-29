@@ -32,10 +32,10 @@ api.interceptors.response.use(
   }
 );
 
-export const signup = (userData) => api.post("/user/signup", userData);
-export const login = (userData) => api.post("/user/login", userData);
+export const signup = (userData: UserData) => api.post("/user/signup", userData);
+export const login = (userData: UserData) => api.post("/user/login", userData);
 export const getNotes = () => api.get("/notes");
-export const createNote = async (noteData) => {
+export const createNote = async (noteData: NoteData) => {
   try {
     const response = await api.post("/notes", noteData);
     console.log("Note created successfully:", response.data);
@@ -45,10 +45,10 @@ export const createNote = async (noteData) => {
     throw error;
   }
 };
-export const updateNote = async (id, data) => {
+export const updateNote = async (id: string, data: { title: string; text: string }) => {
   return axios.put(`/notes/${id}`, data);
 };
-export const deleteNote = (id) => api.delete(`/notes/${id}`);
-export const restoreNote = (id) => api.post(`/notes/restore/${id}`);
+export const deleteNote = (id: string) => api.delete(`/notes/${id}`);
+export const restoreNote = (id: string) => api.post(`/notes/restore/${id}`);
 export const getDeletedNotes = () => api.get("/notes/deleted");
 //export const getNoteById = (id) => api.put(`/notes/${id}`);
