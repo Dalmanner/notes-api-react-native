@@ -31,6 +31,10 @@ export default function DeletedNotesScreen() {
     }
   };
 
+  const handleRefresh = () => {
+    fetchDeletedNotes();
+  };
+
   useEffect(() => {
     fetchDeletedNotes();
   }, []);
@@ -49,6 +53,7 @@ export default function DeletedNotesScreen() {
           </View>
         )}
       />
+      <Button title="Refresh" onPress={handleRefresh} />
     </View>
   );
 }

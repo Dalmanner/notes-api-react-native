@@ -26,6 +26,7 @@ export default function ExploreScreen() {
   const fetchNotes = async () => {
     try {
       const response = await getNotes();
+      handleRefresh();
       setNotes(response.data); // Save notes in state
     } catch (err) {
       console.error("Error fetching notes:", err);
@@ -101,6 +102,11 @@ export default function ExploreScreen() {
     setNewNote({ title: note.title, text: note.text }); // Populate input fields
   };
 
+  const handleRefresh = () => {
+    setLoading(true);
+    fetchNotes();
+  };
+
   if (loading) {
     return (
       <View style={styles.container}>
@@ -146,6 +152,8 @@ export default function ExploreScreen() {
         </>
       )}
 
+      
+
       <Text style={styles.header}>Your Notes</Text>
       <FlatList
         data={notes}
@@ -159,7 +167,9 @@ export default function ExploreScreen() {
             <Text>{item.text}</Text>
           </TouchableOpacity>
         )}
+        ListEmptyComponent={<Text>No notes yet, press to refresh!</Text>}
       />
+      <Button title="Refresh" onPress={handleRefresh} />
     </View>
   );
 }
