@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { createNote, getNotes } from "../../src/api/notesApi";
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../src/navigation/types';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { createNote, getNotes, updateNote, deleteNote } from "../../src/api/notesApi";
 
 interface Note {
   id: string;
@@ -15,12 +20,9 @@ export default function ExploreScreen() {
   const [newNote, setNewNote] = useState<{ title: string; text: string }>({ title: "", text: "" });
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
-  
-  
-  type ExploreScreenNavigationProp = StackNavigationProp<RootStackParamList, "Explore">;
-  
-  const navigation = useNavigation<ExploreScreenNavigationProp>();
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null); // For update/delete
 
+  // Fetch notes from API
   const fetchNotes = async () => {
     try {
       const response = await getNotes();
@@ -37,6 +39,7 @@ export default function ExploreScreen() {
     fetchNotes(); // Fetch notes when the component mounts
   }, []);
 
+  // Handle note creation
   const handleCreateNote = async () => {
     if (!newNote.title || !newNote.text) {
       alert("Title and text are required to create a note.");
@@ -44,7 +47,7 @@ export default function ExploreScreen() {
     }
 
     try {
-      await createNote(newNote); // Backend will link to userId
+      await createNote(newNote);
       alert("Note created successfully!");
       setNewNote({ title: "", text: "" }); // Reset input fields
       fetchNotes(); // Refresh the notes list
@@ -52,6 +55,50 @@ export default function ExploreScreen() {
       console.error("Error creating note:", err);
       alert("Failed to create note.");
     }
+  };
+
+  // Handle note update
+  const handleUpdateNote = async () => {
+    if (!selectedNote) {
+      alert("No note selected for update.");
+      return;
+    }
+
+    try {
+      await updateNote(selectedNote.id, { title: newNote.title, text: newNote.text });
+      alert("Note updated successfully!");
+      setNewNote({ title: "", text: "" });
+      setSelectedNote(null); // Clear selection
+      fetchNotes(); // Refresh the notes list
+    } catch (err) {
+      console.error("Error updating note:", err);
+      alert("Failed to update note.");
+    }
+  };
+
+  // Handle note deletion
+  const handleDeleteNote = async () => {
+    if (!selectedNote) {
+      alert("No note selected for deletion.");
+      return;
+    }
+
+    try {
+      await deleteNote(selectedNote.id);
+      alert("Note deleted successfully!");
+      setNewNote({ title: "", text: "" });
+      setSelectedNote(null); // Clear selection
+      fetchNotes(); // Refresh the notes list
+    } catch (err) {
+      console.error("Error deleting note:", err);
+      alert("Failed to delete note.");
+    }
+  };
+
+  // Handle note selection
+  const handleSelectNote = (note: Note) => {
+    setSelectedNote(note); // Set the selected note
+    setNewNote({ title: note.title, text: note.text }); // Populate input fields
   };
 
   if (loading) {
@@ -64,7 +111,9 @@ export default function ExploreScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Create a Note</Text>
+      <Text style={styles.header}>
+        {selectedNote ? "Edit Note" : "Create a Note"}
+      </Text>
 
       <TextInput
         style={styles.input}
@@ -79,7 +128,23 @@ export default function ExploreScreen() {
         onChangeText={(text) => setNewNote({ ...newNote, text })}
         multiline
       />
-      <Button title="Create Note" onPress={handleCreateNote} />
+
+      {!selectedNote ? (
+        <Button title="Create Note" onPress={handleCreateNote} />
+      ) : (
+        <>
+          <Button title="Update Note" onPress={handleUpdateNote} />
+          <Button title="Delete Note" onPress={handleDeleteNote} color="red" />
+          <Button
+            title="Cancel"
+            onPress={() => {
+              setNewNote({ title: "", text: "" });
+              setSelectedNote(null); // Clear selection
+            }}
+            color="gray"
+          />
+        </>
+      )}
 
       <Text style={styles.header}>Your Notes</Text>
       <FlatList
@@ -88,12 +153,11 @@ export default function ExploreScreen() {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.note}
-            onPress={() => navigation.navigate("NoteDetailScreen", { id: item.id, title: item.title, text: item.text })} // Pass the note id
+            onPress={() => handleSelectNote(item)}
           >
             <Text style={styles.title}>{item.title}</Text>
             <Text>{item.text}</Text>
           </TouchableOpacity>
-
         )}
       />
     </View>

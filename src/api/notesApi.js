@@ -45,10 +45,17 @@ export const createNote = async (noteData) => {
     throw error;
   }
 };
-export const updateNote = async (id, data) => {
-  return axios.put(`/notes/${id}`, data);
-};
+export const updateNote = (id, noteData) => api.put(`/notes/${id}`, noteData);
 export const deleteNote = (id) => api.delete(`/notes/${id}`);
 export const restoreNote = (id) => api.post(`/notes/restore/${id}`);
 export const getDeletedNotes = () => api.get("/notes/deleted");
-//export const getNoteById = (id) => api.put(`/notes/${id}`);
+export const getUserData = () => api.get("/user/data");
+export const updateUserData = (userData) => api.put("/user/data", userData);
+export const deleteUserData = () => api.delete("/user/data");
+export const logout = () => api.post("/user/logout");
+export const deleteAccount = () => api.delete("/user");
+export const changePassword = (passwordData) => api.put("/user/password", passwordData);
+export const resetPassword = (emailData) => api.post("/user/password/reset", emailData);
+export const GetNoteById = (id) => api.get(`/notes/${id}`);
+
+//https://ia81fdqska.execute-api.eu-north-1.amazonaws.com/dev/api/notes/89fb595c-dfa6-4c79-b409-60c6332bff97 // PUT, a correct way to update a note by id
