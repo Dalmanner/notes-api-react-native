@@ -30,21 +30,21 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Login',
+          title: 'Login ',
           tabBarIcon: ({ color }) => <MaterialIcons name="login" size={24} color="black" />
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'My Notes',
+          title: 'My Notes ',
           tabBarIcon: ({ color }) => <MaterialIcons name="edit-note" size={24} color="black" />
         }}
       />
       <Tabs.Screen
         name="Deleted"
         options={{
-          title: "Deleted Notes",
+          title: "Deleted ",
           tabBarIcon: ({ color }) => <MaterialIcons name="delete" size={24} color="black" />
       }}
     />
