@@ -38,7 +38,7 @@ export default function TabLayout() {
         name="explore"
         options={{
           title: 'My Notes ',
-          tabBarIcon: ({ color }) => <MaterialIcons name="edit-note" size={24} color="black" />
+          tabBarIcon: ({ color }) => <MaterialIcons name="edit-note" size={28} color="black" />
         }}
       />
       <Tabs.Screen

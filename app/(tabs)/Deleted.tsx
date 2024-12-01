@@ -14,8 +14,9 @@ export default function DeletedNotesScreen() {
   const fetchDeletedNotes = async () => {
     try {
       const response = await getDeletedNotes();
-      setDeletedNotes(response.data);
       handleRefresh();
+      setDeletedNotes(response.data);
+      
     } catch (err: any) {
       console.error("Error fetching deleted notes:", err);
       alert("Failed to fetch deleted notes.");
