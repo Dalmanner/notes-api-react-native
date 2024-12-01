@@ -55,3 +55,4 @@ export const logout = () => api.post("/user/logout");
 export const deleteAccount = () => api.delete("/user");
 export const changePassword = (passwordData) => api.put("/user/password", passwordData);
 export const resetPassword = (emailData) => api.post("/user/password/reset", emailData);
+export const GetNoteById = (id) => api.get(`/notes/${id}`);
