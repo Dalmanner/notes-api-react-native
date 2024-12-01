@@ -24,6 +24,7 @@ export default function AuthScreen() {
       console.log("Token received:", response.data.token);
       AsyncStorage.setItem('token', response.data.token);
       console.log("Token saved to AsyncStorage");
+      alert('Login successful! Your session will be active for 1 hour.');
       router.push('/explore');
     } catch (err: any) {
       alert('Login failed: ' + err.message);

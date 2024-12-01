@@ -64,4 +64,5 @@ const styles = StyleSheet.create({
   header: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
   note: { borderWidth: 1, padding: 10, marginVertical: 5, borderRadius: 5 },
   title: { fontWeight: "bold" },
+  button: { marginVertical: 5, padding: 10, shadowColor: "black", shadowOpacity: 0.5, shadowRadius: 5, shadowOffset: { width: 0, height: 2 }, elevation: 5, borderRadius: 5, backgroundColor: "white", color: "black", textAlign: "center", transform: [{ translateY: 1 }] },
 });
