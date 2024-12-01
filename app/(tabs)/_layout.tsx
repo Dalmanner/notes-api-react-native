@@ -6,6 +6,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function TabLayout() {
   
@@ -30,21 +31,21 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Login',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="login" size={24} color="black" />
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
           title: 'My Notes',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="note.text" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="edit-note" size={24} color="black" />
         }}
       />
       <Tabs.Screen
         name="Deleted"
         options={{
           title: "Deleted Notes",
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="trash" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="delete" size={24} color="black" />
       }}
     />
     </Tabs>
