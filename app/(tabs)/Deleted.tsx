@@ -13,8 +13,9 @@ export default function DeletedNotesScreen() {
 
   const fetchDeletedNotes = async () => {
     try {
-      const response = await getDeletedNotes(); // userId används av backend
+      const response = await getDeletedNotes();
       setDeletedNotes(response.data);
+      handleRefresh();
     } catch (err: any) {
       console.error("Error fetching deleted notes:", err);
       alert("Failed to fetch deleted notes.");
@@ -25,7 +26,7 @@ export default function DeletedNotesScreen() {
     try {
       await restoreNote(id);
       alert("Note restored!");
-      fetchDeletedNotes(); // Uppdatera listan
+      fetchDeletedNotes();
     } catch (err: any) {
       alert("Failed to restore note: " + err.message);
     }

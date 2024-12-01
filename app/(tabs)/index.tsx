@@ -1,5 +1,3 @@
-//(tabs)/index.tsx
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -9,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function AuthScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter(); // För att navigera till andra sidor
+  const router = useRouter();
 
   const handleSignup = async () => {
     try {
@@ -24,21 +22,15 @@ export default function AuthScreen() {
     try {
       const response = await login({ username, password });
       console.log("Token received:", response.data.token);
-      AsyncStorage.setItem('token', response.data.token); // Spara token för framtida API-anrop
+      AsyncStorage.setItem('token', response.data.token);
       console.log("Token saved to AsyncStorage");
-      router.push('/explore'); // Navigera till nästa vy
+      router.push('/explore');
     } catch (err: any) {
       alert('Login failed: ' + err.message);
     }
   };
 
   return (
-    //title: Welcome to the Notes App:
-    //placeholder: Username
-    //placeholder: Password
-    //Signup
-
-    
     <View style={styles.container}>
       <Text style={styles.header}>Welcome to Mac´s Notes</Text>
       <TextInput

@@ -6,10 +6,9 @@ const api = axios.create({
   baseURL: "https://ia81fdqska.execute-api.eu-north-1.amazonaws.com/dev/api",
 });
 
-// Lägg till Authorization-header för varje request
 api.interceptors.request.use(
   async (config) => {
-    const token = await AsyncStorage.getItem("token"); // Hämta token
+    const token = await AsyncStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token.trim()}`;
     }
@@ -56,6 +55,3 @@ export const logout = () => api.post("/user/logout");
 export const deleteAccount = () => api.delete("/user");
 export const changePassword = (passwordData) => api.put("/user/password", passwordData);
 export const resetPassword = (emailData) => api.post("/user/password/reset", emailData);
-export const GetNoteById = (id) => api.get(`/notes/${id}`);
-
-//https://ia81fdqska.execute-api.eu-north-1.amazonaws.com/dev/api/notes/89fb595c-dfa6-4c79-b409-60c6332bff97 // PUT, a correct way to update a note by id

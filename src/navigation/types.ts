@@ -1,8 +1,4 @@
-//types.js
-//import { RootStackParamList } from "../../src/navigation/types.ts";
-
 export type RootStackParamList = {
-
     goBack: undefined;
     Explore: undefined;
     Home: undefined;

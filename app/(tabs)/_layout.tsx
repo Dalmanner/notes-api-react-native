@@ -42,7 +42,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="deleted-notes"
+        name="Deleted"
         options={{
           title: "Deleted Notes",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="trash" color={color} />,

@@ -20,14 +20,13 @@ export default function ExploreScreen() {
   const [newNote, setNewNote] = useState<{ title: string; text: string }>({ title: "", text: "" });
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedNote, setSelectedNote] = useState<Note | null>(null); // For update/delete
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
-  // Fetch notes from API
   const fetchNotes = async () => {
     try {
       const response = await getNotes();
       handleRefresh();
-      setNotes(response.data); // Save notes in state
+      setNotes(response.data);
     } catch (err) {
       console.error("Error fetching notes:", err);
       alert("Failed to fetch notes.");
@@ -37,10 +36,9 @@ export default function ExploreScreen() {
   };
 
   useEffect(() => {
-    fetchNotes(); // Fetch notes when the component mounts
+    fetchNotes();
   }, []);
 
-  // Handle note creation
   const handleCreateNote = async () => {
     if (!newNote.title || !newNote.text) {
       alert("Title and text are required to create a note.");
@@ -50,15 +48,14 @@ export default function ExploreScreen() {
     try {
       await createNote(newNote);
       alert("Note created successfully!");
-      setNewNote({ title: "", text: "" }); // Reset input fields
-      fetchNotes(); // Refresh the notes list
+      setNewNote({ title: "", text: "" });
+      fetchNotes();
     } catch (err) {
       console.error("Error creating note:", err);
       alert("Failed to create note.");
     }
   };
 
-  // Handle note update
   const handleUpdateNote = async () => {
     if (!selectedNote) {
       alert("No note selected for update.");
@@ -69,15 +66,14 @@ export default function ExploreScreen() {
       await updateNote(selectedNote.id, { title: newNote.title, text: newNote.text });
       alert("Note updated successfully!");
       setNewNote({ title: "", text: "" });
-      setSelectedNote(null); // Clear selection
-      fetchNotes(); // Refresh the notes list
+      setSelectedNote(null);
+      fetchNotes(); 
     } catch (err) {
       console.error("Error updating note:", err);
       alert("Failed to update note.");
     }
   };
 
-  // Handle note deletion
   const handleDeleteNote = async () => {
     if (!selectedNote) {
       alert("No note selected for deletion.");
@@ -88,18 +84,17 @@ export default function ExploreScreen() {
       await deleteNote(selectedNote.id);
       alert("Note deleted successfully!");
       setNewNote({ title: "", text: "" });
-      setSelectedNote(null); // Clear selection
-      fetchNotes(); // Refresh the notes list
+      setSelectedNote(null);
+      fetchNotes();
     } catch (err) {
       console.error("Error deleting note:", err);
       alert("Failed to delete note.");
     }
   };
 
-  // Handle note selection
   const handleSelectNote = (note: Note) => {
-    setSelectedNote(note); // Set the selected note
-    setNewNote({ title: note.title, text: note.text }); // Populate input fields
+    setSelectedNote(note);
+    setNewNote({ title: note.title, text: note.text });
   };
 
   const handleRefresh = () => {
@@ -145,14 +140,12 @@ export default function ExploreScreen() {
             title="Cancel"
             onPress={() => {
               setNewNote({ title: "", text: "" });
-              setSelectedNote(null); // Clear selection
+              setSelectedNote(null);
             }}
             color="gray"
           />
         </>
       )}
-
-      
 
       <Text style={styles.header}>Your Notes</Text>
       <FlatList
