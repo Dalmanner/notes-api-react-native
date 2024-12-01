@@ -25,7 +25,7 @@ export type IconSymbolName = keyof typeof MAPPING;
 /**
  * An icon component that uses native SFSymbols on iOS, and MaterialIcons on Android and web. This ensures a consistent look across platforms, and optimal resource usage.
  *
- * Icon `name`s are based on SFSymbols and require manual mapping to MaterialIcons.
+ * Icon `name`s are based on SFSymbols and require manual mapping to MaterialIcons. How to do that? See the `MAPPING` object in this file. How to find the MaterialIcons name? See the MaterialIcons website: https://icons.expo.fyi
  */
 export function IconSymbol({
   name,
