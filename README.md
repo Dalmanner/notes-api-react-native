@@ -1,5 +1,8 @@
 # 👋 Welcome to Mac´s Notes, a simple beginner React Native frontend app to test a note api backend school project.
 
+![Mac´s Notes](https://github.com/user-attachments/assets/be63181c-5ad7-457a-a9ba-18726fe5151b)
+
+
 
 
 
