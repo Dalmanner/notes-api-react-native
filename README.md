@@ -1,4 +1,8 @@
-# Welcome to your Expo app 👋
+# 👋 Welcome to Mac´s Notes, a simple beginner React Native frontend app to test a note api backend school project.
+
+
+
+
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
